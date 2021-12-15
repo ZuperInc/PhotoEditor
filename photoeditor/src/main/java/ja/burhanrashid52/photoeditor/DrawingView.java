@@ -18,6 +18,7 @@ import androidx.annotation.VisibleForTesting;
 import java.util.Stack;
 
 import ja.burhanrashid52.photoeditor.shape.AbstractShape;
+import ja.burhanrashid52.photoeditor.shape.ArrowShape;
 import ja.burhanrashid52.photoeditor.shape.BrushShape;
 import ja.burhanrashid52.photoeditor.shape.LineShape;
 import ja.burhanrashid52.photoeditor.shape.OvalShape;
@@ -69,9 +70,15 @@ public class DrawingView extends View {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setDither(true);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeCap(Paint.Cap.ROUND);
+        if(currentShapeBuilder.getShapeType() == ShapeType.ARROW) {
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+            paint.setStrokeJoin(Paint.Join.MITER);
+            paint.setStrokeCap(Paint.Cap.BUTT);
+        } else {
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeJoin(Paint.Join.ROUND);
+            paint.setStrokeCap(Paint.Cap.ROUND);
+        }
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
         // apply shape builder parameters
@@ -175,6 +182,8 @@ public class DrawingView extends View {
             shape = new RectangleShape();
         } else if (currentShapeBuilder.getShapeType() == ShapeType.LINE) {
             shape = new LineShape();
+        } else if (currentShapeBuilder.getShapeType() == ShapeType.ARROW) {
+            shape = new ArrowShape();
         } else {
             shape = new BrushShape();
         }
