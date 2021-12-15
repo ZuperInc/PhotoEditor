@@ -38,7 +38,7 @@ public class ArrowShape extends AbstractShape {
 
     private @NonNull Path createLinePath() {
         float angle = 90;
-        float radius = 35;
+        float radius = 30;
         float angleRad = (float) (Math.PI*angle/180.0f);
         float lineAngle = (float) (Math.atan2(bottom-top,right-left));
         Path path = new Path();
